@@ -22,13 +22,6 @@ Then visit:
 
 ## Game Thumbnails 🕹️
 
-### Snake 🐍
-
-![(images/snake-thumb.svg)
-
-### Shooter 🔫
-
-!(images/shooter-thumb.svg)
 
 ## Project Structure 🧩
 
