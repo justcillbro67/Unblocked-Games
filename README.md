@@ -24,11 +24,11 @@ Then visit:
 
 ### Snake 🐍
 
-![Snake thumbnail](images/snake-thumb.svg)
+![(images/snake-thumb.svg)
 
 ### Shooter 🔫
 
-![Shooter thumbnail](images/shooter-thumb.svg)
+!(images/shooter-thumb.svg)
 
 ## Project Structure 🧩
 
