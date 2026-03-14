@@ -1,293 +1,100 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEON SNAKE</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #05040f;
-    --grid: #0d0b1e;
-    --neon-green: #00ff88;
-    --neon-pink: #ff2d78;
-    --neon-blue: #00cfff;
-    --neon-yellow: #ffe600;
-    --glow-green: 0 0 8px #00ff88, 0 0 20px #00ff8844;
-    --glow-pink: 0 0 8px #ff2d78, 0 0 20px #ff2d7844;
-    --glow-blue: 0 0 8px #00cfff, 0 0 20px #00cfff44;
-  }
-
-  html, body {
-    width: 100%; height: 100%;
-    background: var(--bg);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Orbitron', monospace;
-    overflow: hidden;
-    color: white;
-  }
-
-  /* Scanline overlay */
-  body::after {
-    content: '';
-    position: fixed; inset: 0;
-    background: repeating-linear-gradient(
-      to bottom,
-      transparent 0px,
-      transparent 3px,
-      rgba(0,0,0,0.08) 3px,
-      rgba(0,0,0,0.08) 4px
-    );
-    pointer-events: none;
-    z-index: 100;
-  }
-
-  #app {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    position: relative;
-  }
-
-  #title {
-    font-size: 2.8rem;
-    font-weight: 900;
-    letter-spacing: 0.25em;
-    color: var(--neon-green);
-    text-shadow: var(--glow-green), 0 0 60px #00ff8822;
-    animation: flicker 4s infinite;
-  }
-
-  @keyframes flicker {
-    0%, 95%, 100% { opacity: 1; }
-    96% { opacity: 0.7; }
-    97% { opacity: 1; }
-    98% { opacity: 0.5; }
-    99% { opacity: 1; }
-  }
-
-  #hud {
-    display: flex;
-    gap: 40px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
-  }
-
-  .hud-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-  .hud-label { color: #444; font-size: 0.6rem; letter-spacing: 0.2em; }
-  .hud-value {
-    font-size: 1.4rem;
-    font-weight: 700;
-    font-family: 'Orbitron', monospace;
-    color: var(--neon-blue);
-    text-shadow: var(--glow-blue);
-    transition: all 0.1s;
-  }
-  .hud-value.pop {
-    transform: scale(1.4);
-    color: var(--neon-yellow);
-    text-shadow: 0 0 8px var(--neon-yellow);
-  }
-
-  #canvas-wrap {
-    position: relative;
-    border: 1.5px solid #1a1a3a;
-    box-shadow: 0 0 0 1px #00cfff22, 0 0 40px #00cfff18, inset 0 0 60px #00000099;
-  }
-
-  #canvas-wrap::before, #canvas-wrap::after {
-    content: '';
-    position: absolute;
-    width: 12px; height: 12px;
-    border-color: var(--neon-blue);
-    border-style: solid;
-    z-index: 2;
-  }
-  #canvas-wrap::before { top: -2px; left: -2px; border-width: 2px 0 0 2px; }
-  #canvas-wrap::after  { bottom: -2px; right: -2px; border-width: 0 2px 2px 0; }
-
-  canvas {
-    display: block;
-    background: var(--grid);
-    image-rendering: pixelated;
-  }
-
-  #overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    background: rgba(5,4,15,0.88);
-    z-index: 10;
-    transition: opacity 0.3s;
-  }
-  #overlay.hidden { opacity: 0; pointer-events: none; }
-
-  #overlay-title {
-    font-size: 1.5rem;
-    font-weight: 900;
-    letter-spacing: 0.2em;
-    color: var(--neon-pink);
-    text-shadow: var(--glow-pink);
-  }
-
-  #overlay-score {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.9rem;
-    color: #888;
-    letter-spacing: 0.15em;
-  }
-  #overlay-score span { color: var(--neon-yellow); text-shadow: 0 0 8px var(--neon-yellow); }
-
-  #start-btn {
-    margin-top: 8px;
-    padding: 10px 32px;
-    background: transparent;
-    border: 1.5px solid var(--neon-green);
-    color: var(--neon-green);
-    font-family: 'Orbitron', monospace;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    cursor: pointer;
-    text-shadow: var(--glow-green);
-    box-shadow: var(--glow-green), inset 0 0 20px #00ff8811;
-    transition: all 0.15s;
-    position: relative;
-    overflow: hidden;
-  }
-  #start-btn:hover {
-    background: #00ff8822;
-    box-shadow: 0 0 16px #00ff88, 0 0 40px #00ff8844, inset 0 0 20px #00ff8822;
-    letter-spacing: 0.3em;
-  }
-  #start-btn:active { transform: scale(0.97); }
-
-  #controls {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.65rem;
-    color: #333;
-    letter-spacing: 0.15em;
-    text-align: center;
-    line-height: 1.8;
-  }
-
-  /* Particle canvas */
-  #particles {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .speed-badge {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    color: #333;
-  }
-  .speed-bar {
-    display: flex; gap: 3px; margin-top: 4px;
-  }
-  .speed-pip {
-    width: 8px; height: 8px;
-    border: 1px solid #222;
-    background: #111;
-    transition: all 0.3s;
-  }
-  .speed-pip.on {
-    background: var(--neon-pink);
-    box-shadow: 0 0 6px var(--neon-pink);
-    border-color: var(--neon-pink);
-  }
-
-  .home-btn {
-    position: fixed;
-    top: 18px;
-    left: 18px;
-    z-index: 200;
-    padding: 8px 14px;
-    border-radius: 999px;
-    font-size: 0.65rem;
-    font-family: 'Share Tech Mono', monospace;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: #f0f0f5;
-    border: 1px solid #1f1f26;
-    background: rgba(20,20,24,0.9);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.45);
-    backdrop-filter: blur(8px);
-    transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s, color 0.12s, background 0.12s;
-  }
-  .home-btn:hover {
-    transform: translateY(-1px);
-    border-color: #c8f135;
-    color: #c8f135;
-    background: rgba(20,20,24,0.95);
-    box-shadow: 0 10px 22px rgba(0,0,0,0.5);
-  }
-  .home-btn:active { transform: translateY(0); }
-
-  @media (max-width: 600px) {
-    .home-btn {
-      top: 12px;
-      left: 12px;
-      padding: 6px 10px;
-      font-size: 0.6rem;
-      letter-spacing: 0.12em;
-    }
-  }
-</style>
+<title>Neon Snake | Unblocked.GG</title>
+<meta name="description" content="Play Neon Snake — a glowing arcade classic with speed tiers and crisp controls.">
+<meta property="og:title" content="Neon Snake | Unblocked.GG">
+<meta property="og:description" content="Classic snake with neon visuals, speed tiers, and quick restarts.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="images/snake-thumb.svg">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/game-shell.css">
+<link rel="stylesheet" href="css/snake.css">
 </head>
-<body>
-<a class="home-btn" href="index.html" aria-label="Back to home">Home</a>
-<div id="app">
-  <div id="title">NEON SNAKE</div>
-
-  <div id="hud">
-    <div class="hud-item">
-      <span class="hud-label">SCORE</span>
-      <span class="hud-value" id="score-display">0</span>
-    </div>
-    <div class="hud-item">
-      <span class="hud-label">BEST</span>
-      <span class="hud-value" id="best-display">0</span>
-    </div>
-    <div class="hud-item">
-      <span class="hud-label">SPEED</span>
-      <div class="speed-bar" id="speed-bar">
-        <div class="speed-pip" id="p1"></div>
-        <div class="speed-pip" id="p2"></div>
-        <div class="speed-pip" id="p3"></div>
-        <div class="speed-pip" id="p4"></div>
-        <div class="speed-pip" id="p5"></div>
+<body class="game snake-page">
+<div class="page-shell">
+  <div id="site-header"></div>
+  <main id="main" class="page-content">
+    <section class="game-shell">
+      <div class="game-hero">
+        <span class="badge badge-accent">Arcade</span>
+        <h1>Neon Snake</h1>
+        <p>Eat, grow, and survive the grid. Clear clean lines, avoid yourself, and chase a new high score.</p>
       </div>
-    </div>
-  </div>
 
-  <div id="canvas-wrap">
-    <canvas id="particles"></canvas>
-    <canvas id="game"></canvas>
-    <div id="overlay">
-      <div id="overlay-title">NEON SNAKE</div>
-      <div id="overlay-score" id="final-score-line" style="display:none"></div>
-      <button id="start-btn">[ PRESS START ]</button>
-      <div id="controls">
-        ARROW KEYS / WASD — MOVE<br>
-        P — PAUSE
+      <div class="game-stage">
+        <div id="app">
+          <div id="title">NEON SNAKE</div>
+
+          <div id="hud">
+            <div class="hud-item">
+              <span class="hud-label">SCORE</span>
+              <span class="hud-value" id="score-display">0</span>
+            </div>
+            <div class="hud-item">
+              <span class="hud-label">BEST</span>
+              <span class="hud-value" id="best-display">0</span>
+            </div>
+            <div class="hud-item">
+              <span class="hud-label">SPEED</span>
+              <div class="speed-bar" id="speed-bar">
+                <div class="speed-pip" id="p1"></div>
+                <div class="speed-pip" id="p2"></div>
+                <div class="speed-pip" id="p3"></div>
+                <div class="speed-pip" id="p4"></div>
+                <div class="speed-pip" id="p5"></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="canvas-wrap">
+            <canvas id="particles"></canvas>
+            <canvas id="game"></canvas>
+            <div id="overlay">
+              <div id="overlay-title">NEON SNAKE</div>
+              <div id="overlay-score" style="display:none"></div>
+              <div id="loading-hint" class="loading-text" style="display:none">Loading...</div>
+              <button id="start-btn">[ PRESS START ]</button>
+              <div id="controls">
+                ARROW KEYS / WASD — MOVE<br>
+                P — PAUSE
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+
+      <div class="game-panel">
+        <div class="panel info-block">
+          <h3>How to Play</h3>
+          <p>Guide the snake to eat glowing orbs. Each orb adds length and increases speed. Colliding with walls or yourself ends the run.</p>
+        </div>
+        <div class="panel info-block">
+          <h3>Controls</h3>
+          <div class="callout">
+            <span class="control-chip">Arrow Keys</span>
+            <span class="control-chip">WASD</span>
+            <span class="control-chip">P = Pause</span>
+            <span class="control-chip">Swipe (Mobile)</span>
+          </div>
+        </div>
+        <div class="panel info-block">
+          <h3>Tips</h3>
+          <p>Take wide turns at higher speeds. Use the grid edges to reset your route and avoid tight loops.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
 </div>
 
+<button id="back-to-top" class="back-to-top" type="button">Top</button>
+
+<script src="js/site.js"></script>
 <script>
 const COLS = 24, ROWS = 24, CELL = 22;
 const canvas = document.getElementById('game');
@@ -303,6 +110,7 @@ const overlay = document.getElementById('overlay');
 const overlayTitle = document.getElementById('overlay-title');
 const overlayScore = document.getElementById('overlay-score');
 const startBtn = document.getElementById('start-btn');
+const loadingHint = document.getElementById('loading-hint');
 const speedPips = [1,2,3,4,5].map(i => document.getElementById('p'+i));
 
 let snake, dir, nextDir, food, score, best = 0, gameLoop, paused = false, started = false;
@@ -346,9 +154,7 @@ function tick() {
   dir = nextDir;
   const head = {x: snake[0].x + dir.x, y: snake[0].y + dir.y};
 
-  // Wall collision
   if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS) return endGame();
-  // Self collision
   if (snake.some(s => s.x===head.x && s.y===head.y)) return endGame();
 
   snake.unshift(head);
@@ -358,7 +164,6 @@ function tick() {
     if (score > best) best = score;
     scoreEl.textContent = score;
     bestEl.textContent = best;
-    // Pop animation
     scoreEl.classList.add('pop');
     setTimeout(() => scoreEl.classList.remove('pop'), 150);
     updateSpeedBar();
@@ -381,13 +186,11 @@ function scheduleNext() {
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Grid dots
   ctx.fillStyle = '#0f0d22';
   for (let x = 0; x < COLS; x++) for (let y = 0; y < ROWS; y++) {
     ctx.fillRect(x*CELL + CELL/2 - 0.5, y*CELL + CELL/2 - 0.5, 1, 1);
   }
 
-  // Food
   const fx = food.x * CELL + CELL/2, fy = food.y * CELL + CELL/2;
   const t = Date.now() / 400;
   const pulse = 0.85 + 0.15 * Math.sin(t);
@@ -398,18 +201,15 @@ function draw() {
   ctx.beginPath();
   ctx.arc(fx, fy, (CELL/2 - 3) * pulse, 0, Math.PI*2);
   ctx.fill();
-  // Inner highlight
   ctx.fillStyle = '#ff90b3';
   ctx.beginPath();
   ctx.arc(fx - 2, fy - 2, 2.5 * pulse, 0, Math.PI*2);
   ctx.fill();
   ctx.restore();
 
-  // Snake
   snake.forEach((seg, i) => {
     const x = seg.x * CELL, y = seg.y * CELL;
     const ratio = i / snake.length;
-    // Head is bright green, tail fades to teal
     const r = Math.round(0 + ratio * 0);
     const g = Math.round(255 - ratio * 80);
     const b = Math.round(136 + ratio * 100);
@@ -425,7 +225,6 @@ function draw() {
     roundRect(ctx, x+pad, y+pad, CELL-pad*2, CELL-pad*2, i===0 ? 4 : 3);
     ctx.fill();
 
-    // Head eyes
     if (i === 0) {
       ctx.shadowBlur = 0;
       ctx.globalAlpha = 1;
@@ -435,7 +234,6 @@ function draw() {
       const cx = x + CELL/2 + ex*2, cy = y + CELL/2 + ey*2;
       ctx.beginPath(); ctx.arc(cx + perpX*3.5, cy + perpY*3.5, 2.2, 0, Math.PI*2); ctx.fill();
       ctx.beginPath(); ctx.arc(cx - perpX*3.5, cy - perpY*3.5, 2.2, 0, Math.PI*2); ctx.fill();
-      // Eye shine
       ctx.fillStyle = 'white';
       ctx.beginPath(); ctx.arc(cx + perpX*3.5 + 0.5, cy + perpY*3.5 - 0.5, 0.8, 0, Math.PI*2); ctx.fill();
       ctx.beginPath(); ctx.arc(cx - perpX*3.5 + 0.5, cy - perpY*3.5 - 0.5, 0.8, 0, Math.PI*2); ctx.fill();
@@ -454,7 +252,6 @@ function roundRect(ctx, x, y, w, h, r) {
   ctx.closePath();
 }
 
-// Particles
 function spawnParticles(cx, cy) {
   for (let i = 0; i < 14; i++) {
     const angle = Math.random() * Math.PI * 2;
@@ -487,7 +284,6 @@ function animateParticles() {
     pCtx.fill();
     pCtx.restore();
   });
-  // Animate food pulse too
   if (started && !paused) draw();
   requestAnimationFrame(animateParticles);
 }
@@ -497,7 +293,6 @@ function endGame() {
   clearTimeout(tickTimeout);
   started = false;
   overlayTitle.textContent = score > 0 ? 'GAME OVER' : 'NEON SNAKE';
-  overlayTitle.style.color = score > 0 ? 'var(--neon-pink)' : 'var(--neon-pink)';
   if (score > 0) {
     overlayScore.style.display = 'block';
     overlayScore.innerHTML = `SCORE <span>${score}</span> &nbsp;|&nbsp; BEST <span>${best}</span>`;
@@ -509,11 +304,18 @@ function endGame() {
 }
 
 function startGame() {
-  overlay.classList.add('hidden');
-  started = true;
-  initGame();
-  draw();
-  scheduleNext();
+  startBtn.disabled = true;
+  loadingHint.style.display = 'block';
+  startBtn.textContent = '[ LOADING ]';
+  setTimeout(() => {
+    overlay.classList.add('hidden');
+    loadingHint.style.display = 'none';
+    started = true;
+    initGame();
+    draw();
+    scheduleNext();
+    startBtn.disabled = false;
+  }, 250);
 }
 
 startBtn.addEventListener('click', startGame);
@@ -537,7 +339,6 @@ document.addEventListener('keydown', e => {
   if (d.x !== -dir.x || dir.x === 0) if (d.y !== -dir.y || dir.y === 0) nextDir = d;
 });
 
-// Touch swipe support
 let touchStart = null;
 document.addEventListener('touchstart', e => { touchStart = e.touches[0]; }, {passive:true});
 document.addEventListener('touchend', e => {

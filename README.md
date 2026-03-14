@@ -20,6 +20,17 @@ Then visit:
 
 - `http://localhost:8080`
 
+## Feedback Server 📝
+
+To save feedback into this README, run the Python server:
+
+- `pip install -r requirements.txt`
+- `python3 app.py`
+
+Then visit:
+
+- `http://localhost:5000`
+
 ## Game Thumbnails 🕹️
 
 
@@ -38,3 +49,4 @@ Then visit:
 
 - This project is static and does not require any dependencies.
 - Works best on modern desktop and mobile browsers.
+

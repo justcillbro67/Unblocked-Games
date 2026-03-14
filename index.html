@@ -3,469 +3,245 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UNBLOCKED GAMES</title>
+<title>Unblocked.GG | Home</title>
+<meta name="description" content="Fast, ad-free browser games. Jump into Neon Snake, Apex.io, and more with zero installs.">
+<meta property="og:title" content="Unblocked.GG | Free Browser Games">
+<meta property="og:description" content="Ad-free browser games that load fast and play anywhere.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="images/snake-thumb.svg">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg: #0c0c0f;
-  --surface: #141418;
-  --border: #1f1f26;
-  --text: #f0f0f5;
-  --muted: #555566;
-  --accent: #c8f135;
-  --accent2: #5c6ef8;
-  --red: #ff4757;
-}
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Syne', sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* ── Noise texture overlay ── */
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-  opacity: 0.025;
-  pointer-events: none;
-  z-index: 999;
-}
-
-/* ── Nav ── */
-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 40px;
-  border-bottom: 1px solid var(--border);
-  position: sticky; top: 0;
-  background: rgba(12,12,15,0.9);
-  backdrop-filter: blur(12px);
-  z-index: 100;
-}
-.nav-logo {
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--text);
-}
-.nav-logo span { color: var(--accent); }
-.nav-links {
-  display: flex; gap: 28px;
-  list-style: none;
-}
-.nav-links a {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--text); }
-.nav-tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  padding: 4px 10px;
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  color: var(--muted);
-  letter-spacing: 0.05em;
-}
-
-/* ── Hero ── */
-.hero {
-  padding: 80px 40px 60px;
-  max-width: 1100px;
-  margin: 0 auto;
-  position: relative;
-}
-.hero-eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
-  color: var(--accent);
-  text-transform: uppercase;
-  margin-bottom: 16px;
-  display: flex; align-items: center; gap: 10px;
-}
-.hero-eyebrow::before {
-  content: '';
-  display: inline-block;
-  width: 20px; height: 1px;
-  background: var(--accent);
-}
-.hero h1 {
-  font-size: clamp(2.6rem, 5.5vw, 4.6rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.12;
-  max-width: 620px;
-}
-.hero h1 em {
-  font-style: normal;
-  color: var(--accent);
-  position: relative;
-}
-.hero-sub {
-  margin-top: 20px;
-  font-size: 0.9rem;
-  color: var(--muted);
-  font-weight: 400;
-  max-width: 420px;
-  line-height: 1.7;
-}
-.hero-stats {
-  display: flex; gap: 32px;
-  margin-top: 40px;
-}
-.hero-stat {
-  display: flex; flex-direction: column; gap: 2px;
-}
-.hero-stat-num {
-  font-size: 1.6rem;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  color: var(--text);
-}
-.hero-stat-label {
-  font-size: 0.65rem;
-  font-family: 'DM Mono', monospace;
-  color: var(--muted);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-/* ── Search ── */
-.search-wrap {
-  max-width: 1100px;
-  margin: 0 auto 40px;
-  padding: 0 40px;
-}
-.search-inner {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 12px 18px;
-  transition: border-color 0.2s;
-}
-.search-inner:focus-within { border-color: var(--accent); }
-.search-icon { color: var(--muted); font-size: 1rem; flex-shrink: 0; }
-.search-inner input {
-  flex: 1;
-  background: none;
-  border: none;
-  outline: none;
-  color: var(--text);
-  font-family: 'Syne', sans-serif;
-  font-size: 0.9rem;
-}
-.search-inner input::placeholder { color: var(--muted); }
-
-/* ── Filter tabs ── */
-.filters {
-  max-width: 1100px;
-  margin: 0 auto 36px;
-  padding: 0 40px;
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.filter-btn {
-  padding: 6px 16px;
-  border-radius: 100px;
-  border: 1px solid var(--border);
-  background: none;
-  color: var(--muted);
-  font-family: 'Syne', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  cursor: pointer;
-  text-transform: uppercase;
-  transition: all 0.15s;
-}
-.filter-btn:hover { border-color: var(--text); color: var(--text); }
-.filter-btn.active { background: var(--accent); border-color: var(--accent); color: #0c0c0f; }
-
-/* ── Section heading ── */
-.section-head {
-  max-width: 1100px;
-  margin: 0 auto 24px;
-  padding: 0 40px;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-}
-.section-title {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.section-count {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--muted);
-}
-
-/* ── Game grid ── */
-.game-grid {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 40px 80px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
-}
-
-.game-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-  animation: fadeUp 0.4s both;
-}
-.game-card:hover {
-  transform: translateY(-4px);
-  border-color: #2e2e38;
-  box-shadow: 0 16px 40px rgba(0,0,0,0.4);
-}
-.game-card.hidden { display: none; }
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.game-thumb {
-  width: 100%;
-  aspect-ratio: 16/9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-  position: relative;
-  overflow: hidden;
-}
-.game-thumb .thumb-bg {
-  position: absolute; inset: 0;
-}
-.game-thumb .thumb-icon {
-  position: relative;
-  z-index: 1;
-  filter: drop-shadow(0 4px 16px rgba(0,0,0,0.4));
-  transition: transform 0.3s;
-}
-.game-card:hover .thumb-icon { transform: scale(1.12); }
-
-.game-info {
-  padding: 16px 18px 18px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.game-name {
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: var(--text);
-}
-.game-desc {
-  font-size: 0.75rem;
-  color: var(--muted);
-  line-height: 1.5;
-  font-weight: 400;
-}
-.game-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-.game-tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.6rem;
-  padding: 3px 8px;
-  border-radius: 4px;
-  border: 1px solid var(--border);
-  color: var(--muted);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-.play-btn {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-.play-btn svg { width: 12px; height: 12px; fill: var(--accent); }
-
-/* Tag colors */
-.tag-arcade { border-color: #ff475720; color: #ff4757; background: #ff47570d; }
-.tag-shooter { border-color: #5c6ef820; color: #5c6ef8; background: #5c6ef80d; }
-.tag-puzzle { border-color: #c8f13520; color: #c8f135; background: #c8f1350d; }
-.tag-action { border-color: #ff6b3520; color: #ff6b35; background: #ff6b350d; }
-
-/* ── No results ── */
-#no-results {
-  display: none;
-  grid-column: 1/-1;
-  text-align: center;
-  padding: 60px 20px;
-  color: var(--muted);
-  font-size: 0.85rem;
-}
-
-/* ── Footer ── */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 28px 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-.footer-logo { font-weight: 800; font-size: 0.85rem; letter-spacing: -0.02em; color: var(--muted); }
-.footer-logo span { color: var(--accent); }
-.footer-note { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.08em; }
-
-@media (max-width: 600px) {
-  nav { padding: 16px 20px; }
-  .nav-links { display: none; }
-  .hero { padding: 50px 20px 40px; }
-  .search-wrap, .filters, .section-head, .game-grid { padding-left: 20px; padding-right: 20px; }
-  footer { padding: 24px 20px; flex-direction: column; gap: 8px; text-align: center; }
-}
-</style>
+<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/home.css">
 </head>
-<body>
-
-<nav>
-  <div class="nav-logo">UNBLOCKED<span>.</span>GG</div>
-  <ul class="nav-links">
-    <li><a href="#">Home</a></li>
-    <li><a href="#">Popular</a></li>
-    <li><a href="#">New</a></li>
-    <li><a href="#">2 Player</a></li>
-  </ul>
-  <div class="nav-tag">2 games</div>
-</nav>
-
-<section class="hero">
-  <div class="hero-eyebrow">Free to play — no installs</div>
-  <h1>Games that<br>just <em>work.</em></h1>
-  <p class="hero-sub">No ads. No sign-ups. No nonsense. Just click and play — straight from your browser.</p>
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <div class="hero-stat-num" id="total-count">2</div>
-      <div class="hero-stat-label">Games</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">0</div>
-      <div class="hero-stat-label">Ads</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">∞</div>
-      <div class="hero-stat-label">Fun</div>
-    </div>
-  </div>
-</section>
-
-<div class="search-wrap">
-  <div class="search-inner">
-    <span class="search-icon">🔍</span>
-    <input type="text" id="search-input" placeholder="Search games..." autocomplete="off">
-  </div>
-</div>
-
-<div class="filters">
-  <button class="filter-btn active" data-filter="all">All</button>
-  <button class="filter-btn" data-filter="arcade">Arcade</button>
-  <button class="filter-btn" data-filter="shooter">Shooter</button>
-  <button class="filter-btn" data-filter="puzzle">Puzzle</button>
-  <button class="filter-btn" data-filter="action">Action</button>
-</div>
-
-<div class="section-head">
-  <span class="section-title">All Games</span>
-  <span class="section-count" id="showing-count">Showing 2 of 2</span>
-</div>
-
-<div class="game-grid" id="game-grid">
-
-  <a class="game-card" href="snake-game.html" data-tags="arcade">
-    <div class="game-thumb">
-      <div class="thumb-bg" style="background: linear-gradient(135deg, #0d1b2a 0%, #1b4332 100%);"></div>
-      <span class="thumb-icon">🐍</span>
-    </div>
-    <div class="game-info">
-      <div class="game-name">Neon Snake</div>
-      <div class="game-desc">Classic snake with a glowing neon twist. Grow your snake, dodge yourself, beat your high score.</div>
-      <div class="game-footer">
-        <span class="game-tag tag-arcade">Arcade</span>
-        <span class="play-btn">
-          Play
-          <svg viewBox="0 0 12 12"><path d="M2 1l9 5-9 5V1z"/></svg>
-        </span>
+<body class="site home-page" data-theme="dark">
+<div class="page-shell">
+  <div id="site-header"></div>
+  <main id="main" class="page-content">
+    <section class="hero">
+      <div class="hero-eyebrow">Free to play — no installs</div>
+      <h1>Games that<br>just <em>work.</em></h1>
+      <p class="hero-sub">No ads. No sign-ups. No nonsense. Just click and play — straight from your browser.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#games">Browse Games</a>
+        <a class="btn btn-ghost" href="#coming-soon">See What’s Next</a>
       </div>
-    </div>
-  </a>
-
-  <a class="game-card" href="shooter-game.html" data-tags="shooter action">
-    <div class="game-thumb">
-      <div class="thumb-bg" style="background: linear-gradient(135deg, #0f0c29 0%, #1a1a4e 100%);"></div>
-      <span class="thumb-icon">🎯</span>
-    </div>
-    <div class="game-info">
-      <div class="game-name">APEX.IO</div>
-      <div class="game-desc">Top-down wave shooter. Survive endless enemy waves, level up your score, and outlast the swarm.</div>
-      <div class="game-footer">
-        <span class="game-tag tag-shooter">Shooter</span>
-        <span class="play-btn">
-          Play
-          <svg viewBox="0 0 12 12"><path d="M2 1l9 5-9 5V1z"/></svg>
-        </span>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num" id="total-count">2</div>
+          <div class="hero-stat-label">Live Games</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">0</div>
+          <div class="hero-stat-label">Ads</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">∞</div>
+          <div class="hero-stat-label">Fun</div>
+        </div>
       </div>
-    </div>
-  </a>
+    </section>
 
-  <div id="no-results">No games found. Try a different search.</div>
+    <section id="games" class="section tight">
+      <div class="section-head">
+        <div>
+          <div class="section-title">All Games</div>
+          <p class="section-sub">Search, filter, and jump into your next run. Live games load instantly; upcoming titles show what’s next.</p>
+        </div>
+        <span class="section-title" id="showing-count">Showing 2 of 5</span>
+      </div>
+      <div class="search-wrap">
+        <div class="search-inner">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Search games..." autocomplete="off">
+        </div>
+      </div>
+
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="arcade">Arcade</button>
+        <button class="filter-btn" data-filter="shooter">Shooter</button>
+        <button class="filter-btn" data-filter="puzzle">Puzzle</button>
+        <button class="filter-btn" data-filter="action">Action</button>
+        <button class="filter-btn" data-filter="coming">Coming Soon</button>
+      </div>
+
+      <div class="game-grid" id="game-grid">
+        <a class="game-card" href="snake-game.html" data-tags="arcade" data-status="live">
+          <div class="game-thumb">
+            <div class="thumb-bg" style="background: linear-gradient(135deg, #0d1b2a 0%, #1b4332 100%);"></div>
+            <span class="thumb-icon">🐍</span>
+          </div>
+          <div class="game-info">
+            <div class="game-name">Neon Snake</div>
+            <div class="game-desc">Classic snake with a glowing neon twist. Grow your snake, dodge yourself, beat your high score.</div>
+            <div class="game-footer">
+              <span class="game-tag tag-arcade">Arcade</span>
+              <span class="play-btn">
+                Play
+                <svg viewBox="0 0 12 12"><path d="M2 1l9 5-9 5V1z"/></svg>
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <a class="game-card" href="shooter-game.html" data-tags="shooter action" data-status="live">
+          <div class="game-thumb">
+            <div class="thumb-bg" style="background: linear-gradient(135deg, #0f0c29 0%, #1a1a4e 100%);"></div>
+            <span class="thumb-icon">🎯</span>
+          </div>
+          <div class="game-info">
+            <div class="game-name">APEX.IO</div>
+            <div class="game-desc">Top-down wave shooter. Survive endless enemy waves, level up your score, and outlast the swarm.</div>
+            <div class="game-footer">
+              <span class="game-tag tag-shooter">Shooter</span>
+              <span class="play-btn">
+                Play
+                <svg viewBox="0 0 12 12"><path d="M2 1l9 5-9 5V1z"/></svg>
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <a class="game-card" href="tetris-game.html" data-tags="puzzle" data-status="soon">
+          <div class="game-thumb">
+            <div class="thumb-bg" style="background: linear-gradient(135deg, #101b2b 0%, #372772 100%);"></div>
+            <span class="thumb-icon">🧩</span>
+          </div>
+          <div class="game-info">
+            <div class="game-name">Tetris Pulse</div>
+            <div class="game-desc">Stack, rotate, and clear lines with neon pressure and a slick speed ramp.</div>
+            <div class="game-footer">
+              <span class="game-tag tag-puzzle">Puzzle</span>
+              <span class="play-btn">Details</span>
+            </div>
+            <div class="game-status badge-soon" style="margin-top: 10px; width: fit-content;">Coming Soon</div>
+          </div>
+        </a>
+
+        <a class="game-card" href="pong-game.html" data-tags="arcade" data-status="soon">
+          <div class="game-thumb">
+            <div class="thumb-bg" style="background: linear-gradient(135deg, #14232f 0%, #1f4f5f 100%);"></div>
+            <span class="thumb-icon">🏓</span>
+          </div>
+          <div class="game-info">
+            <div class="game-name">Pong Zero</div>
+            <div class="game-desc">Clean retro pong with modern physics, fast rallies, and crisp sound.</div>
+            <div class="game-footer">
+              <span class="game-tag tag-arcade">Arcade</span>
+              <span class="play-btn">Details</span>
+            </div>
+            <div class="game-status badge-soon" style="margin-top: 10px; width: fit-content;">Coming Soon</div>
+          </div>
+        </a>
+
+        <a class="game-card" href="memory-game.html" data-tags="puzzle" data-status="soon">
+          <div class="game-thumb">
+            <div class="thumb-bg" style="background: linear-gradient(135deg, #2b1b12 0%, #6b3a2c 100%);"></div>
+            <span class="thumb-icon">🧠</span>
+          </div>
+          <div class="game-info">
+            <div class="game-name">Memory Grid</div>
+            <div class="game-desc">Match cards against the clock. Clean visuals, escalating difficulty.</div>
+            <div class="game-footer">
+              <span class="game-tag tag-puzzle">Puzzle</span>
+              <span class="play-btn">Details</span>
+            </div>
+            <div class="game-status badge-soon" style="margin-top: 10px; width: fit-content;">Coming Soon</div>
+          </div>
+        </a>
+
+        <div id="no-results">No games found. Try a different search.</div>
+      </div>
+    </section>
+
+    <section id="coming-soon" class="section">
+      <div class="section-head">
+        <div class="section-title">Coming Soon</div>
+      </div>
+      <div class="panel">
+        <p class="section-sub">We’re building the next batch of games now. Want a title prioritized? Drop feedback below and we’ll queue it up.</p>
+        <div class="card-grid" style="margin-top: 20px;">
+          <div class="panel">
+            <span class="badge badge-soon">Tetris Pulse</span>
+            <p style="margin-top: 10px; color: var(--muted); font-size: 0.85rem;">Guided drop speed, neon visuals, and clean score streaks.</p>
+          </div>
+          <div class="panel">
+            <span class="badge badge-soon">Pong Zero</span>
+            <p style="margin-top: 10px; color: var(--muted); font-size: 0.85rem;">Two-player-ready retro pong with sharp physics.</p>
+          </div>
+          <div class="panel">
+            <span class="badge badge-soon">Memory Grid</span>
+            <p style="margin-top: 10px; color: var(--muted); font-size: 0.85rem;">A calm, fast-paced memory match challenge.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="section-head">
+        <div class="section-title">About the Project</div>
+      </div>
+      <div class="about-grid">
+        <div class="panel">
+          <h3 style="font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px;">Why it exists</h3>
+          <p class="section-sub">A zero-friction library of browser games that load fast, work on school devices, and skip the bloat.</p>
+        </div>
+        <div class="panel">
+          <h3 style="font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px;">What’s next</h3>
+          <p class="section-sub">More genres, better mobile controls, and a lightweight save system for highscores.</p>
+        </div>
+        <div class="panel">
+          <h3 style="font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px;">How you can help</h3>
+          <p class="section-sub">Share game ideas, report bugs, and vote on what should ship first.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="feedback" class="section">
+      <div class="section-head">
+        <div class="section-title">Feedback</div>
+      </div>
+      <div class="panel">
+        <p class="section-sub" style="margin-bottom: 18px;">Submissions save to the server and appear in the README and feedback page.</p>
+        <form class="feedback-form" id="feedback-form" action="/submit-feedback" method="post" aria-label="Feedback form">
+          <div>
+            <label for="feedback-name">Name</label>
+            <input id="feedback-name" name="name" type="text" placeholder="Player name">
+          </div>
+          <div>
+            <label for="feedback-message">Message</label>
+            <textarea id="feedback-message" name="message" placeholder="What should we build or fix next?" required></textarea>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:10px;">
+            <button class="btn btn-primary" type="submit">Send Feedback</button>
+            <a class="btn btn-ghost" href="feedback.html">View Feedback</a>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
 </div>
 
-<footer>
-  <div class="footer-logo">UNBLOCKED<span>.</span>GG</div>
-  <div class="footer-note">100% browser-based · no installs needed</div>
-</footer>
+<button id="back-to-top" class="back-to-top" type="button">Top</button>
 
+<script src="js/site.js"></script>
 <script>
 const cards = document.querySelectorAll('.game-card');
 const searchInput = document.getElementById('search-input');
 const filterBtns = document.querySelectorAll('.filter-btn');
 const showingCount = document.getElementById('showing-count');
 const noResults = document.getElementById('no-results');
+const totalCount = document.getElementById('total-count');
 let activeFilter = 'all';
+
+function updateCounts(visible) {
+  showingCount.textContent = `Showing ${visible} of ${cards.length}`;
+  const liveCount = Array.from(cards).filter(c => c.dataset.status === 'live').length;
+  totalCount.textContent = liveCount;
+}
 
 function filterCards() {
   const q = searchInput.value.toLowerCase().trim();
@@ -474,13 +250,16 @@ function filterCards() {
     const name = card.querySelector('.game-name').textContent.toLowerCase();
     const desc = card.querySelector('.game-desc').textContent.toLowerCase();
     const tags = card.dataset.tags || '';
+    const status = card.dataset.status || 'live';
     const matchSearch = !q || name.includes(q) || desc.includes(q);
-    const matchFilter = activeFilter === 'all' || tags.includes(activeFilter);
+    let matchFilter = true;
+    if (activeFilter === 'coming') matchFilter = status === 'soon';
+    else if (activeFilter !== 'all') matchFilter = tags.includes(activeFilter);
     const show = matchSearch && matchFilter;
     card.classList.toggle('hidden', !show);
     if (show) visible++;
   });
-  showingCount.textContent = `Showing ${visible} of ${cards.length}`;
+  updateCounts(visible);
   noResults.style.display = visible === 0 ? 'block' : 'none';
 }
 
@@ -495,10 +274,11 @@ filterBtns.forEach(btn => {
   });
 });
 
-// Stagger card animations
 cards.forEach((card, i) => {
   card.style.animationDelay = `${i * 80}ms`;
 });
+
+filterCards();
 </script>
 </body>
 </html>
