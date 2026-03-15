@@ -1,6 +1,6 @@
 body.game.shooter-page {
   background: #0c0c0f;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 #app {
@@ -31,7 +31,7 @@ body.game.shooter-page {
   display: flex;
   gap: 20px;
   align-items: center;
-  font-family: 'DM Mono', monospace;
+  font-family: 'Open Sans', sans-serif;
   font-size: 0.75rem;
   color: var(--muted);
 }
@@ -75,7 +75,7 @@ canvas { display: block; max-width: 100%; height: auto; }
 #overlay-sub {
   font-size: 0.8rem;
   color: var(--muted);
-  font-family: 'DM Mono', monospace;
+  font-family: 'Open Sans', sans-serif;
   letter-spacing: 0.05em;
   text-align: center;
   line-height: 2;
@@ -89,7 +89,7 @@ canvas { display: block; max-width: 100%; height: auto; }
   color: #0c0c0f;
   border: none;
   border-radius: 100px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
@@ -110,7 +110,7 @@ canvas { display: block; max-width: 100%; height: auto; }
 }
 #health-label {
   font-size: 0.6rem;
-  font-family: 'DM Mono', monospace;
+  font-family: 'Open Sans', sans-serif;
   color: var(--muted);
   letter-spacing: 0.1em;
   white-space: nowrap;
@@ -131,7 +131,7 @@ canvas { display: block; max-width: 100%; height: auto; }
 }
 
 .loading-text {
-  font-family: 'DM Mono', monospace;
+  font-family: 'Open Sans', sans-serif;
   font-size: 0.65rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;

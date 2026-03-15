@@ -18,8 +18,8 @@ body.site {
   --accent: #c8f135;
   --accent2: #5c6ef8;
   --danger: #ff4757;
-  --font-ui: 'Syne', sans-serif;
-  --font-mono: 'DM Mono', monospace;
+  --font-ui: 'Open Sans', sans-serif;
+  --font-mono: 'Open Sans', sans-serif;
   background: radial-gradient(1200px 600px at 10% -20%, rgba(92,110,248,0.18), transparent 60%),
               radial-gradient(900px 480px at 80% 0%, rgba(200,241,53,0.16), transparent 55%),
               var(--site-bg);
@@ -64,8 +64,8 @@ body.game {
   --accent: #c8f135;
   --accent2: #5c6ef8;
   --danger: #ff4757;
-  --font-ui: 'Syne', sans-serif;
-  --font-mono: 'DM Mono', monospace;
+  --font-ui: 'Open Sans', sans-serif;
+  --font-mono: 'Open Sans', sans-serif;
   background: var(--site-bg);
   color: var(--text);
   min-height: 100vh;

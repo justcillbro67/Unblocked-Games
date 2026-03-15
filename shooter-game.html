@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:image" content="images/shooter-thumb.svg">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght;400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
 <link rel="stylesheet" href="css/game-shell.css">
 <link rel="stylesheet" href="css/shooter.css">
@@ -412,7 +412,7 @@ function draw() {
     ctx.fillStyle=THEME.waveBg;
     ctx.beginPath(); ctx.roundRect(W/2-70,18,140,34,8); ctx.fill();
     ctx.fillStyle=THEME.waveText;
-    ctx.font='500 13px DM Sans';
+    ctx.font='500 13px Open Sans';
     ctx.textAlign='center'; ctx.textBaseline='middle';
     ctx.fillText(`WAVE ${wave}`, W/2, 35);
     ctx.restore();
