@@ -50,3 +50,15 @@ Then visit:
 - This project is static and does not require any dependencies.
 - Works best on modern desktop and mobile browsers.
 
+
+
+## Feedback (Latest First)
+
+<!-- FEEDBACK:START -->
+- **Name**: Abdul
+  - Message: test
+  - Time: 2026-03-15T18:33:17.061586+00:00
+- **Name**: wer4t5y
+  - Message: wertyu
+  - Time: 2026-03-15T18:33:04.569511+00:00
+<!-- FEEDBACK:END -->
